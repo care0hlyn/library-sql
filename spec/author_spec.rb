@@ -1,6 +1,5 @@
 require 'library_spec_helper'
 
-
 describe Author do
 
   it 'should initialize the name of the author' do
@@ -28,4 +27,5 @@ describe Author do
     test_author.delete
     expect(Author.all).to eq []
   end
+
 end

@@ -1,5 +1,3 @@
-require 'pry'
-
 class Author
 
   attr_reader :name, :id
