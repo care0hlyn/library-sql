@@ -72,4 +72,16 @@ describe Book do
     test_book.add_copies(1)
     expect(test_book.get_copies).to eq 2
   end
+
+  it 'should allow the user to check out a copy of a book' do
+    test_book = Book.new({'name' => "Little Women"})
+    test_book.save
+    test_author = Author.new({'name' => "Louisa May Alcott"})
+    test_author.save
+    # test_patron = Patron.new({'name' => 'Dustin'})
+    # test_patron.save
+    test_book.add_author(test_author)
+    test_book.checkout(1)
+    expect(Book.get_checked_out).to eq [test_book]
+  end
 end

@@ -1,5 +1,6 @@
 require 'book'
 require 'author'
+require 'patron'
 require 'rspec'
 require 'pg'
 

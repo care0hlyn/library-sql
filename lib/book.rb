@@ -76,6 +76,21 @@ class Book
     results = DB.exec("SELECT total_copies FROM copies WHERE book_id = #{@id};")
     total_copies = results.first['total_copies'].to_i
   end
+
+  def checkout(patron_id)
+    results = DB.exec("INSERT INTO checkouts (patron_id, book_id) VALUES (#{patron_id}, #{@id});")
+    self.add_copies(-1)
+  end
+
+  def self.get_checked_out
+    checked_book = []
+    book_results = DB.exec("SELECT * FROM checkouts JOIN books ON (books.id = checkouts.book_id);")
+    book_results.each do |book|
+      checked_book << Book.new(book)
+    end
+    checked_book
+  end
+
 end
 
 
