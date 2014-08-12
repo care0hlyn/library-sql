@@ -60,4 +60,16 @@ describe Book do
     expect(test_book.authors).to eq [test_author]
     expect(Book.search_title(test_book.name)).to eq [test_book]
   end
+
+  it 'should add a copy of a book to the same book' do
+    test_book = Book.new({'name' => "Little Women"})
+    test_book.save
+    test_author = Author.new({'name' => "Louisa May Alcott"})
+    test_author.save
+    expect(Book.all).to eq [test_book]
+    test_book.add_author(test_author)
+    expect(test_book.authors).to eq [test_author]
+    test_book.add_copies(1)
+    expect(test_book.get_copies).to eq 2
+  end
 end

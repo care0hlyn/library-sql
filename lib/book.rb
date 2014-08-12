@@ -25,6 +25,7 @@ class Book
   def save
     results = DB.exec("INSERT INTO books (name) VALUES ('#{@name}') RETURNING id;")
     @id = results.first['id'].to_i
+    DB.exec("INSERT INTO copies (book_id, total_copies) VALUES (#{@id}, 1);")
   end
 
   def ==(another_book)
@@ -64,6 +65,16 @@ class Book
       output_books << Book.new(book)
     end
     output_books
+  end
+
+  def add_copies(how_many)
+    total_copies = how_many + self.get_copies
+    DB.exec("UPDATE copies SET total_copies = #{total_copies} WHERE book_id = #{@id};")
+  end
+
+  def get_copies
+    results = DB.exec("SELECT total_copies FROM copies WHERE book_id = #{@id};")
+    total_copies = results.first['total_copies'].to_i
   end
 end
 
