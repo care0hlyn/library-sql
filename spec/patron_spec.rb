@@ -12,4 +12,5 @@ describe Patron do
     test_patron.save
     expect(Patron.all).to eq [test_patron]
   end
+
 end

@@ -78,10 +78,10 @@ describe Book do
     test_book.save
     test_author = Author.new({'name' => "Louisa May Alcott"})
     test_author.save
-    # test_patron = Patron.new({'name' => 'Dustin'})
-    # test_patron.save
+    test_patron = Patron.new({'name' => 'Dustin'})
+    test_patron.save
     test_book.add_author(test_author)
-    test_book.checkout(1)
+    test_book.checkout(test_patron.id)
     expect(Book.get_checked_out).to eq [test_book]
   end
 end
