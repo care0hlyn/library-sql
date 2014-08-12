@@ -3,6 +3,7 @@ require 'author'
 require 'patron'
 require 'rspec'
 require 'pg'
+require 'chronic'
 
 DB = PG.connect({:dbname => 'library'})
 

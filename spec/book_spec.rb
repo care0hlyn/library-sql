@@ -84,4 +84,17 @@ describe Book do
     test_book.checkout(test_patron.id)
     expect(Book.get_checked_out).to eq [test_book]
   end
+
+  it 'should provide a due date when the book is checked out' do
+    test_book = Book.new({'name' => "Little Women"})
+    test_book.save
+    test_author = Author.new({'name' => "Louisa May Alcott"})
+    test_author.save
+    test_patron = Patron.new({'name' => 'Dustin'})
+    test_patron.save
+    test_book.add_author(test_author)
+    test_book.checkout(test_patron.id)
+    expect(test_patron.get_checked_out).to eq ({"Little Women" => '2014-08-20'})
+
+  end
 end

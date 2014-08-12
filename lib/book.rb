@@ -1,4 +1,5 @@
 require 'pry'
+require 'chronic'
 
 class Book
 
@@ -83,7 +84,9 @@ class Book
   end
 
   def checkout(patron_id)
-    results = DB.exec("INSERT INTO checkouts (patron_id, book_id) VALUES (#{patron_id}, #{@id});")
+    due_date = Chronic.parse('next week').to_i
+    formatted_due_date = Time.at(due_date).to_s.split(" ")[0]
+    results = DB.exec("INSERT INTO checkouts (patron_id, book_id, due_date) VALUES (#{patron_id}, #{@id}, '#{due_date}');")
     self.add_copies(-1)
   end
 

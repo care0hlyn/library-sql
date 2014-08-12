@@ -1,4 +1,5 @@
 require 'pry'
+require 'chronic'
 
 class Patron
 
@@ -37,6 +38,24 @@ class Patron
       book_results << Book.new(book)
     end
     book_results
+  end
+
+  def get_checked_out
+    due_date = ""
+    currently_checkedout_books = {}
+
+    results = DB.exec("SELECT * FROM checkouts WHERE patron_id = #{@id};")
+    results.each do |checkout|
+      book_id = checkout['book_id']
+      due_date = checkout['due_date']
+      books = DB.exec("SELECT * FROM books WHERE id = #{book_id};")
+      books.each do |book|
+        current_book = Book.new(book)
+        currently_checkedout_books[current_book.name] = Time.at(due_date.to_i).to_s.split(" ")[0]
+      end
+    end
+
+    currently_checkedout_books
   end
 
 end
