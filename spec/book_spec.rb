@@ -28,4 +28,14 @@ describe Book do
     test_book.delete
     expect(Book.all).to eq []
   end
+
+  it 'should add an author to a book' do
+    test_book = Book.new({'name' => "Little Women"})
+    test_book.save
+    test_author = Author.new({'name' => "Louisa May Alcott"})
+    test_author.save
+    expect(Book.all).to eq [test_book]
+    test_book.add_author(test_author)
+    expect(test_book.authors).to eq [test_author]
+  end
 end

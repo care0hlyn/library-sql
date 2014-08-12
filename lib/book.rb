@@ -2,11 +2,15 @@ require 'pry'
 
 class Book
 
-  attr_reader :name, :id
+  attr_reader :name, :id, :authors
 
   def initialize(attributes)
     @name = attributes['name']
     @id = attributes['id'].to_i
+    @authors = attributes['authors']
+    if @authors == nil
+      @authors = []
+    end
   end
 
   def self.all
@@ -34,6 +38,11 @@ class Book
 
   def delete
     DB.exec("DELETE FROM books WHERE id = #{@id};")
+  end
+
+  def add_author(author)
+    @authors << author
+    DB.exec("INSERT INTO authors_books (author_id, book_id) VALUES (#{author.id}, #{@id});")
   end
 
 end
