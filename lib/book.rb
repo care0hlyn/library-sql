@@ -45,7 +45,7 @@ class Book
     DB.exec("INSERT INTO authors_books (author_id, book_id) VALUES (#{author.id}, #{@id});")
   end
 
-  def search_author(author)
+  def self.search_author(author)
     output_books = []
     book_results = DB.exec("SELECT books.* FROM authors
       join authors_books on (authors.id = authors_books.author_id)
@@ -57,6 +57,14 @@ class Book
     output_books
   end
 
+  def self.search_title(title)
+    output_books = []
+    book_results = DB.exec("SELECT * FROM books WHERE name = '#{title}';")
+    book_results.each do |book|
+      output_books << Book.new(book)
+    end
+    output_books
+  end
 end
 
 
