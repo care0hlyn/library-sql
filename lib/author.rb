@@ -31,4 +31,9 @@ class Author
   def ==(another_author)
     another_author.name == self.name && another_author.id == self.id
   end
+
+  def delete
+    DB.exec("DELETE FROM authors WHERE id = #{@id};")
+  end
+
 end

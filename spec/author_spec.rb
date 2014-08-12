@@ -20,4 +20,12 @@ describe Author do
     test_author.save
     expect(Author.all).to eq [test_author]
     end
+
+  it 'should delete the author from the database' do
+    test_author = Author.new({'name' => "JK Rowling"})
+    test_author.save
+    expect(Author.all).to eq [test_author]
+    test_author.delete
+    expect(Author.all).to eq []
+  end
 end
