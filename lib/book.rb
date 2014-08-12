@@ -26,4 +26,9 @@ class Book
   def ==(another_book)
     self.name == another_book.name && self.id == another_book.id
   end
+
+  def update_name(new_name)
+    @name = new_name
+    DB.exec("UPDATE books SET name = '#{@name}' WHERE id = #{@id};")
+  end
 end

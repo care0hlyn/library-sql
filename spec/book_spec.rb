@@ -12,4 +12,12 @@ describe Book do
     test_book.save
     expect(Book.all).to eq [test_book]
   end
+
+  it 'should update the book name in the database' do
+    test_book = Book.new({'name' => "Little Women"})
+    test_book.save
+    test_book.update_name("Big Women")
+    expect(test_book.name).to eq "Big Women"
+    expect(Book.all).to eq [test_book]
+  end
 end
