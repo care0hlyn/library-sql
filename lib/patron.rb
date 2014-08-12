@@ -1,3 +1,5 @@
+require 'pry'
+
 class Patron
 
   attr_reader :name, :id
@@ -23,6 +25,18 @@ class Patron
 
   def ==(another_patron)
     self.name == another_patron.name && self.id == another_patron.id
+  end
+
+  def history
+    book_results = []
+    results = DB.exec("SELECT books.*
+      FROM books JOIN checkouts
+      ON (books.id = checkouts.book_id)
+      WHERE (checkouts.patron_id = #{@id});")
+    results.each do |book|
+      book_results << Book.new(book)
+    end
+    book_results
   end
 
 end

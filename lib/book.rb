@@ -2,15 +2,20 @@ require 'pry'
 
 class Book
 
-  attr_reader :name, :id, :authors
+  attr_reader :name, :id
 
   def initialize(attributes)
     @name = attributes['name']
     @id = attributes['id'].to_i
-    @authors = attributes['authors']
-    if @authors == nil
-      @authors = []
+  end
+
+  def authors
+    results = DB.exec("SELECT * FROM authors;")
+    authors = []
+    results.each do |author|
+      authors << Author.new(author)
     end
+    authors
   end
 
   def self.all
@@ -42,7 +47,7 @@ class Book
   end
 
   def add_author(author)
-    @authors << author
+    # @authors << author
     DB.exec("INSERT INTO authors_books (author_id, book_id) VALUES (#{author.id}, #{@id});")
   end
 
