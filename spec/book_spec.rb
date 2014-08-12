@@ -38,4 +38,15 @@ describe Book do
     test_book.add_author(test_author)
     expect(test_book.authors).to eq [test_author]
   end
+
+  it 'should search for a book by author' do
+    test_book = Book.new({'name' => "Little Women"})
+    test_book.save
+    test_author = Author.new({'name' => "Louisa May Alcott"})
+    test_author.save
+    expect(Book.all).to eq [test_book]
+    test_book.add_author(test_author)
+    expect(test_book.authors).to eq [test_author]
+    expect(test_book.search_author(test_author)).to eq [test_book]
+  end
 end

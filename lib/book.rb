@@ -45,4 +45,52 @@ class Book
     DB.exec("INSERT INTO authors_books (author_id, book_id) VALUES (#{author.id}, #{@id});")
   end
 
+  def search_author(author)
+    output_books = []
+    book_results = DB.exec("SELECT books.* FROM authors
+      join authors_books on (authors.id = authors_books.author_id)
+      join books on (authors_books.book_id = books.id)
+      WHERE authors.id = #{author.id};")
+    book_results.each do |book|
+      output_books << Book.new(book)
+    end
+    output_books
+  end
+
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
