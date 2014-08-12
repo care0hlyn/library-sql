@@ -20,4 +20,12 @@ describe Book do
     expect(test_book.name).to eq "Big Women"
     expect(Book.all).to eq [test_book]
   end
+
+  it 'should delete the book from the database' do
+    test_book = Book.new({'name' => "Little Women"})
+    test_book.save
+    expect(Book.all).to eq [test_book]
+    test_book.delete
+    expect(Book.all).to eq []
+  end
 end
